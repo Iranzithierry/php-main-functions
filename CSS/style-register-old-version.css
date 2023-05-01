@@ -1,0 +1,316 @@
+/* Author Iranzi Thierry ©️2023 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin: 0;
+  height: 100vh;
+  color: #000;
+  font-family: Splide Heading, sans-serif;
+  overflow: auto;
+  background-color: #663dff;
+}
+
+.wrapper {
+  align-items: center;
+  border: 1px solid #ccc;
+  background-color: #e3e3e3;
+  border-radius: 16px;
+  box-shadow: 0 20px 20px rgb(02, 0, 0, 0.3);
+  z-index: 2;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.logo-area {
+  top: 0;
+  background-color: transparent;
+  display: flex;
+  padding-bottom: 8px;
+}
+
+.logo-area img {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto;
+}
+
+.error-text {
+  color: rgb(10, 10, 10);
+  font-size: 14px;
+  font-weight: bold;
+  transition: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background-color: #f8d7da;
+  border: 2px solid rgb(196, 110, 110);
+  padding: 10px;
+  padding-left: 28px;
+  padding-right: 28px;
+  border-radius: 8px;
+  margin: 0 auto;
+  max-width: 300px;
+  text-align: center;
+  max-height: 100px;
+}
+
+.succes {
+  color: rgb(36, 35, 35);
+  font-size: 14px;
+  font-weight: bold;
+  transition: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background-color: #d4edda;
+  border: 2px solid rgb(25, 125, 110);
+  padding: 8px;
+  padding-left: 28px;
+  padding-right: 28px;
+  border-radius: 7px;
+  margin: 0 auto;
+  max-width: 300px;
+  max-height: 100px;
+  text-align: center;
+}
+
+.register-form {
+  display: flex;
+  font-family: Splide Heading, sans-serif;
+}
+.register-form input {
+  font-family: Splide Heading, sans-serif;
+}
+.form {
+  display: flex;
+}
+
+.form .input {
+  width: 100%;
+  padding: 5px;
+  margin-top: 8px;
+}
+
+.form .input input {
+  width: 94%;
+  font-family: Splide Heading, sans-serif;
+}
+
+.form.input input::-webkit-inner-spin-button {
+  display: none;
+}
+
+.input {
+  padding-top: 13px;
+  padding-bottom: 13px;
+  margin-left: 3px;
+}
+
+.input span {
+  font-weight: 600;
+  font-weight: bolder;
+}
+
+#input-field {
+  border: 1px solid #a772cacd;
+  border-radius: 8px;
+  padding: 8px;
+  line-height: 20px;
+  font-weight: 200;
+  font-size: 1.1rem;
+
+  font-style: bold;
+}
+#input-field::placeholder {
+  font-family: Splide Heading, sans-serif;
+}
+#input-field::-webkit-inner-spin-button {
+  display: none;
+}
+
+#input-field:focus {
+  border: 4px solid rgb(151, 30, 225);
+  transition: 0.2s;
+  line-height: 21px;
+  outline: none;
+  transition: cubic-bezier(0.455, 0.03, 0.515, 0.955) 0.1s;
+}
+
+.info {
+  margin-top: 23px;
+  margin-bottom: 18px;
+  cursor: pointer;
+}
+
+.info input {
+  cursor: pointer;
+}
+
+.input .forget a {
+  color: #0000ff;
+  text-align: right;
+  right: 0;
+}
+
+.input.forget a:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.button-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* login-button */
+
+.login-button {
+  align-items: center;
+  background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+  border: 0;
+  border-radius: 8px;
+  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+  box-sizing: border-box;
+  color: #ffffff;
+  display: flex;
+  font-family: Phantomsans, sans-serif;
+  font-size: 16px;
+  justify-content: center;
+  line-height: 0.7em;
+  width: 100%;
+  padding: 3px;
+  text-decoration: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.login-button:active,
+.login-button:hover {
+  outline: 0;
+}
+
+.login-button span {
+  background-color: rgb(5, 6, 45);
+  padding: 14px 22px;
+  border-radius: 6px;
+  width: 100%;
+  height: 100%;
+  transition: 300ms;
+}
+
+.login-button:hover span {
+  background: none;
+}
+
+.login-button:active {
+  transform: scale(0.9);
+}
+
+.line {
+  height: 1px;
+  margin-top: 12px;
+  flex: 1 1 0%;
+  background-color: rgba(55, 65, 81, 1);
+}
+
+.lines {
+  display: flex;
+  margin-top: 10px;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+}
+
+.social-icons .icon {
+  border-radius: 0.125rem;
+  padding: 0.75rem;
+  border: none;
+  background-color: transparent;
+  margin-left: 8px;
+}
+
+.social-icons .icon svg {
+  height: 1.25rem;
+  width: 1.25rem;
+  fill: #0b0b0b;
+}
+
+.footer a {
+  color: blue;
+  text-decoration: none;
+  font-weight: 300;
+  font-style: bold;
+}
+
+.wrapper-small {
+  display: none;
+}
+/* adjust layout for screens smaller than 600px */
+@media screen and (max-width: 600px) {
+  body {
+    height: 100%;
+  }
+  .wrapper {
+    height: 100%;
+    width: 100%;
+    border-radius: none;
+  }
+  .form,
+  .social-icons,
+  .register-form{
+    width: 100%;
+  }
+  input{
+    width: 100%;
+  }
+  .container {
+    height: 100%;
+  }
+  .content {
+    width: 100%;
+  }
+  form {
+    width: 100%;
+    padding: 0 20px;
+  }
+  form .register-form,
+  form .form {
+    display: flex;
+    flex-direction: column;
+  }
+  form .number {
+    margin-top: 20px;
+  }
+  form input[type="text"],
+  form input[type="email"],
+  form input[type="password"],
+  form input[type="tel"] {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .login-button {
+    width: 100%;
+    margin-top: 20px;
+  }
+  .social-icons {
+    margin-top: 20px;
+    text-align: center;
+  }
+  .social-icons .icon {
+    margin: 0 10px;
+  }
+}

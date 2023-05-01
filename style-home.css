@@ -1,0 +1,142 @@
+:root {
+  --primary-color: rgba(28, 30, 35, 1);
+  --secondary-color: #f3f5f7;
+  --accent-color: #4070e5;
+  --bg-color: #e5eeee;
+  --third-color: #e3e3e3;
+  --font-color: #fff;
+  --border-color: rgba(28, 30, 35, 1);
+}
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: "poppins", sans-serif;
+}
+body {
+}
+.container {
+  display: flex;
+}
+.body_content {
+  right: 0;
+  display: flex;
+  width: 100%;
+  background-color: var(--third-color);
+}
+
+.logo_area {
+  display: flex;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 600;
+}
+.logo_area svg {
+  width: 35px;
+  height: 35px;
+}
+nav ul li {
+  list-style: none;
+  padding: 15px;
+  margin: 10px 0 10px 0;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: var(--bg-color);
+  border-radius: 10px;
+  transition: all 0.4s;
+}
+nav ul li:hover {
+  background-color: var(--primary-color);
+  border-color: var(--border-color);
+  border-radius: 10px;
+  color: var(--font-color);
+  transition: all 0.4s;
+}
+
+nav ul {
+  height: 100vh;
+  max-height: calc(100vh - 82px);
+  justify-content: flex-start;
+  overflow: auto;
+  margin-top: 5px;
+  padding-bottom: 15px;
+  padding-right: 5px;
+}
+nav ul::-webkit-scrollbar {
+  width: 10px;
+  background-color: var(--accent-color);
+  border-radius: 10px;
+}
+
+nav ul::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
+  border-radius: 10px;
+  background-clip: padding-box;
+  height: 10px;
+}
+svg {
+  width: 22px;
+  height: 22px;
+}
+.side_nav {
+  height: 100%;
+  width: 100%;
+  max-width: 290px;
+}
+nav {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-radius: 2px;
+  background-color: var(--secondary-color);
+  max-width: 290px;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+.active {
+  background-color: var(--primary-color);
+  color: var(--font-color);
+  transition: all 0.4s;
+}
+.search {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  position: relative;
+  margin-top: 10px;
+}
+
+.search__input {
+  font-family: inherit;
+  font-size: inherit;
+  background-color: var(--bg-color);
+  border: none;
+  color: #646464;
+  padding: 0.8rem 2rem;
+  border-radius: 30px;
+  width: 32em;
+  transition: all ease-in-out 0.5s;
+  margin-left: 2rem;
+}
+.search__input:focus {
+  outline: none;
+  border: 1px solid var(--primary-color);
+}
+
+.search__icon {
+  height: 1.7em;
+  width: 1.7em;
+  fill: var(--primary-color);
+  position: absolute;
+  transform: translate(-209%, -59%);
+}
+#myChart {
+    width: 100%;
+    height: 100%;
+    
+}
