@@ -13,7 +13,6 @@ body {
   overflow-x: hidden;
   justify-content: center;
   margin: 0;
-  min-height: 300vh;
   align-items: center;
   padding: 5px;
   zoom: 0.75;
@@ -34,6 +33,10 @@ table {
   justify-content: center;
   border-radius: 8px;
   z-index: 1;
+  
+}
+#table_deleted{
+  margin-bottom: 50px;
 }
 
 tr {
@@ -64,6 +67,12 @@ th {
   background-color: #fff;
   text-align: center;
   font-family: "Poppins", sans-serif;
+}
+input{
+  height: 25px;
+  width: 25px;
+  cursor: pointer;
+  
 }
 
 .btn {
@@ -231,11 +240,12 @@ th {
   position: fixed;
   bottom: 0;
   right: 0;
-  z-index: 2;
+  z-index: 200;
   width: 100%;
   background-color: #fff;
   display: flex;
   justify-content: flex-end;
+  
 }
 
 .pop-up-menu {

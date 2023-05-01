@@ -7,7 +7,12 @@ if (isset($_SESSION['username']) && $_SESSION['admin_permission'] == true) {
 } else {
     header("location: admin_login.php");
 }
-
+$stmt = $conn->prepare("SELECT COUNT(*) as total_users FROM users");
+$stmt->execute();
+$result = $stmt->get_result();
+while($row = $result->fetch_assoc()) {
+    $total_users = $row['total_users'];
+}
 $stmt_in_january = $conn->prepare("SELECT COUNT(*) as january FROM users WHERE MONTH(joined_at) = 1");
 $stmt_in_january->execute();
 $result_in_january = $stmt_in_january->get_result();
@@ -83,7 +88,7 @@ $users_in_december = $row_in_december['december'];
 ?>
 
 
-<h1>Total users:</h1>
+<h1>Total users:<?php  echo $total_users?></h1>
 
 <style></style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.min.js"></script>
