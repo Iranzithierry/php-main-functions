@@ -69,8 +69,8 @@ $result_deleted = $stmt->get_result();
                     <tbody>
                         <?php while ($row = $result->fetch_assoc()) { ?>
                             <tr>
-                                <?php echo "<form method='post' action='delete_selected.php'>"; ?>
-                                <td><?php echo '<input type="checkbox" name="delete[]" value="'.$row["id"].'">';?></td>
+                                <?php echo "<form method='post' action='delete_selected.php' id='form'>"; ?>
+                                <td><?php echo '<input type="checkbox" name="delete[]" value="' . $row["id"] . '">'; ?></td>
                                 <td><?php echo $row['id']; ?></td>
                                 <td><?php echo $row['fname']; ?></td>
                                 <td><?php echo $row['sname']; ?></td>
@@ -79,14 +79,14 @@ $result_deleted = $stmt->get_result();
                                 <td><?php echo $row['username']; ?></td>
                                 <td><?php echo $row['country']; ?></td>
                                 <td class="btns">
-                                    <?php echo '<a href="edit.php?id=' . $row['id'] . ' target="_blank""><button class ="btn btn-success table-btn">Edit</button></a>'; ?>
-                                    <?php echo '<button class ="btn btn-danger table-btn" onclick="showConfirmation(' . $row['id'] . ')">Delete</button>'; ?>
+                                    <?php echo '<a href="edit.php?id=' . $row['id'] . ' target="_blank""><button class ="btn btn-success table-btn action_btn">Edit</button></a>'; ?>
+                                    <?php echo '<button class ="btn btn-danger table-btn action_btn" onclick="showConfirmation(' . $row['id'] . ')">Delete</button>'; ?>
                                     <?php if ($row['banned_until'] !== NULL && $row['banned_until'] >= date('Y-m-d H:i:s')) { ?>
-                                        <?php echo '<button class ="btn btn-danger table-btn" name="status">Banned</button>'; ?>
-                                        <?php echo '<a href="unban.php?id=' . $row['id'] . '"><button class ="btn btn-success table-btn">Unban</button></a>'; ?>
+                                        <?php echo '<button class ="btn btn-danger table-btn action_btn" name="status">Banned</button>'; ?>
+                                        <?php echo '<a href="unban.php?id=' . $row['id'] . '"><button class ="btn btn-success table-btn action_btn">Unban</button></a>'; ?>
                                     <?php  } else { ?>
-                                        <?php echo '<a href="ban.php?id=' . $row['id'] . '&duration=forever"><button class ="btn btn-danger table-btn">Ban Forever </button></a>'; ?>
-                                        <?php echo '<a href="ban.php?id=' . $row['id'] . '&duration=1month"><button class ="btn btn-warning table-btn">Ban 1 month</button></a>'; ?>
+                                        <?php echo '<a href="ban.php?id=' . $row['id'] . '&duration=forever"><button class ="btn btn-danger table-btn action_btn">Ban Forever </button></a>'; ?>
+                                        <?php echo '<a href="ban.php?id=' . $row['id'] . '&duration=1month"><button class ="btn btn-warning table-btn action_btn">Ban 1 month</button></a>'; ?>
                                     <?php } ?>
                                 </td>
                             </tr>
@@ -95,8 +95,8 @@ $result_deleted = $stmt->get_result();
                                     <p>Are You Sure You Want To Delete This User?</p>
                                 </div>
                                 <div class="button-area">
-                                    <button class="btn btn-danger" onclick="deleteUser(<?php echo $row['id']; ?>)">Yes</button>
-                                    <button class="btn btn-success" onclick="hide(<?php echo $row['id']; ?>)">No</button>
+                                    <button class="btn btn-danger action_btn" onclick="deleteUser(<?php echo $row['id']; ?>)">Yes</button>
+                                    <button class="btn btn-success action_btn" onclick="hide(<?php echo $row['id']; ?>)">No</button>
                                 </div>
                             </div>
 
@@ -104,8 +104,8 @@ $result_deleted = $stmt->get_result();
                     </tbody>
                 </table>
             </div>
-            <?php echo '<button class="btn_bottom-action btn btn-danger type="submit"">&nbsp;DELETE SELECTED</button></a>'?>
-        <?php echo "</form>"; ?>
+            <?php echo '<button class="btn_bottom-action btn btn-danger type="submit"">&nbsp;DELETE SELECTED</button></a>' ?>
+            <?php echo "</form>"; ?>
             <button class="btn-danger section deleted_bar" title="Hide Active Users">Deleted Users</button>
             <div class="email_send">
                 <div id="data"></div>
@@ -203,12 +203,12 @@ $result_deleted = $stmt->get_result();
                                     <p>Are You Sure You Want To Delete This User? &nbsp;<u><b>FOREVER</b></u></p>
                                 </div>
                                 <div class="button-area">
-                                    <button class="btn btn-danger" onclick="deleteUserForever(<?php echo $row['id']; ?>)">Yes</button>
-                                    <button class="btn btn-success" onclick="hide_forever(<?php echo $row['id']; ?>)">No</button>
+                                    <button class="btn btn-danger action_btn" onclick="deleteUserForever(<?php echo $row['id']; ?>)">Yes</button>
+                                    <button class="btn btn-success action_btn" onclick="hide_forever(<?php echo $row['id']; ?>)">No</button>
                                 </div>
                             </div>
 
-                        <?php  }?>
+                        <?php  } ?>
                     </tbody>
                 </table>
             </div>
@@ -222,106 +222,9 @@ $result_deleted = $stmt->get_result();
         <button class="btn_bottom-action btn-success" onclick="email()"><i class="fa-solid fa-paper-plane"></i>&nbsp;<i class="fa-solid fa-envelope"></i>&nbsp;SEND EMAIL</button>
         <a href="statistics.php"><button class="btn_bottom-action btn-success"></i>&nbsp;&nbsp;STATISTICS</button></a>
         <a href="admin_logout.php"><button class="btn_bottom-action btn btn-danger"><i class="fa-solid fa-right-from-bracket"></i>&nbsp;Logout</button></a>
-        
-        
+
+
 
     </div>
-    <script>
-        setInterval(function() {
-            var alert = document.querySelector('.alert');
-            if (alert.style.display = "flex") {
-                alert.style.display = "none";
-            }
-        }, 3000);
-
-
-        function printTable() {
-            var printContents = document.getElementById("table-container").innerHTML;
-            var originalContents = document.body.innerHTML;
-            document.body.innerHTML = printContents;
-            window.print();
-            document.body.innerHTML = originalContents;
-        }
-
-        function printTableall() {
-            var printContents = document.getElementById("all_table").innerHTML;
-            var originalContents = document.body.innerHTML;
-            document.body.innerHTML = printContents;
-            window.print();
-            document.body.innerHTML = originalContents;
-        }
-        btn_deleted = document.querySelector(".deleted");
-        btn_active = document.querySelector(".active");
-        table_active = document.getElementById("table-container");
-        table_deleted = document.getElementById("table_deleted");
-        btn_deleted.addEventListener("click", function(e) {
-            if (table_active.style.display === "block") {
-                table_active.style.display = "none";
-            } else {
-                table_active.style.display = "block";
-                window.scrollTo({
-                    top: btn_active.offsetTop,
-                    behavior: "smooth"
-                });
-            }
-        });
-
-        btn_active.addEventListener("click", function(e) {
-            if (table_deleted.style.display === "block") {
-                table_deleted.style.display = "none";
-            } else {
-                table_deleted.style.display = "block";
-                window.scrollTo({
-                    top: btn_deleted.offsetTop,
-                    behavior: "smooth"
-                });
-            }
-        });
-
-        function printTable_deleted() {
-            var printContents = document.getElementById("table_deleted").innerHTML;
-            var originalContents = document.body.innerHTML;
-            document.body.innerHTML = printContents;
-            window.print();
-            document.body.innerHTML = originalContents;
-        }
-
-        function showConfirmation(id) {
-            var popup = document.getElementById("popup-" + id);
-            popup.style.display = "block";
-        }
-
-        function delete_forever(id) {
-            var popup = document.getElementById("popup-" + id + "-forever");
-            popup.style.display = "block";
-        }
-
-        function hide(id) {
-            var popup = document.getElementById("popup-" + id);
-            popup.style.display = "none";
-        }
-
-        function hide_forever(id) {
-            var popup = document.getElementById("popup-" + id + "-forever");
-            popup.style.display = "none";
-        }
-
-        function deleteUser(id) {
-            window.location.href = "delete.php?id=" + id;
-        }
-
-        function deleteUserForever(id) {
-            window.location.href = "deleted_forever.php?id=" + id;
-        }
-
-        function email() {
-            var email_send = document.querySelector('.email_send');
-            email_send.style.display = "block";
-        }
-
-        function closebtn() {
-            var email_send = document.querySelector('.email_send');
-            email_send.style.display = "none";
-        }
-    </script>
+    <script src="../SCRIPT/script_admin.js"></script>
 </body>

@@ -23,6 +23,19 @@ $succes = "";
 
 // Check if the form has been submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $input = $_POST;
+    function sanitize_input($input)
+    {
+        // Remove tags that may lead to XSS attacks
+        $sanitized = strip_tags($input);
+        // Convert special characters to their HTML entity equivalents
+        $sanitized = htmlentities($sanitized, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        // Remove any remaining non-printable characters
+        $sanitized = filter_var($sanitized, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH);
+        return $sanitized;
+    }
+
+
     $email = $_POST["email"];
     $password = $_POST["password"];
     $confirm_password = $_POST["confirm_password"];
@@ -53,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_stmt_execute($stmt);
 
     $result_number = mysqli_stmt_get_result($stmt);
-      
+
 
     // Check if the user already exists
 
@@ -82,20 +95,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Please Fill All Passwor Field";
     } else if (strlen(trim($_POST["password"])) < 6) {
         $error = "Password Must Be The 6 characters";
-    }
-    else if ($password !== $confirm_password) {
+    } else if ($password !== $confirm_password) {
         $error = "Passwords do not match";
-    }    
-    else if (isset($_POST['selected_country'])) {
-         $country = $_POST["selected_country"];
-    }
-    else {
+    } else if (isset($_POST['selected_country'])) {
+        $country = $_POST["selected_country"];
+    } else {
         $error = "Please select a country";
     }
     if (empty($error)) {
         // Prepare an INSERT query to add the user to the database
         $stmt = $conn->prepare("INSERT INTO users(email,password, fname, sname, mobile_number, username,country,code) VALUES (?,?, ?, ?, ?, ?,?,?)");
-        $stmt->bind_param("ssssssss", $email, $hashed_password, $fname, $sname, $number, $username,$country, $code);
+        $stmt->bind_param("ssssssss", $email, $hashed_password, $fname, $sname, $number, $username, $country, $code);
         $stmt->execute();
         $stmt->close();
         echo "<div style='display:none'>";
@@ -137,7 +147,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
         echo "</div>";
-        $succes =  "Welcome " . $fname . " To Tabnine";
+        $loader =  "<svg class='pl' width='240' height='240' viewBox='0 0 240 240'>
+        <circle class='pl__ring pl__ring--a' cx='120' cy='120' r='105' fill='none' stroke='#000' stroke-width='20' stroke-dasharray='0 660' stroke-dashoffset='-330' stroke-linecap='round'></circle>
+        <circle class='pl__ring pl__ring--b' cx='120' cy='120' r='35' fill='none' stroke='#000' stroke-width='20' stroke-dasharray='0 220' stroke-dashoffset='-110' stroke-linecap='round'></circle>
+        <circle class='pl__ring pl__ring--c' cx='85' cy='120' r='70' fill='none' stroke='#000' stroke-width='20' stroke-dasharray='0 440' stroke-linecap='round'></circle>
+        <circle class='pl__ring pl__ring--d' cx='155' cy='120' r='70' fill='none' stroke='#000' stroke-width='20' stroke-dasharray='0 440' stroke-linecap='round'></circle>
+        </svg>";
         header("refresh:5;url=index.php");
     }
 }
@@ -149,7 +164,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/CSS/style-register.css" />
+    <link rel="stylesheet" href="CSS/style-register.css" />
+    <link rel="stylesheet" href="CSS/style-loader.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css" integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous">
@@ -162,88 +178,84 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="error-text" <?php if (empty($error)) echo "style='display:none;'" ?>>
             <span><?php echo $error ?></span>
         </div>
-        <div class="success" <?php if (empty($succes)) echo "style='display:none;'" ?>>
-            <span><?php echo $succes ?></span>
+        <div class="loader" <?php if (empty($loader)) echo "style='display:none;'" ?>>
+            <?php echo $loader ?>
         </div>
-        <form action="<?php  echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <div class="slider">
+                <div class="slide-track">
+                    <div class="slide">
+                        <img src="IMAGES/pic.jpg" height="100" width="250" alt="" />
+                    </div>
+                    <div class="slide">
+                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/2.png" height="100" width="250" alt="" />
+                    </div>
+                    <div class="slide">
+                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/3.png" height="100" width="250" alt="" />
+                    </div>
+                    <div class="slide">
+                        <img src="IMAGES/pic.jpg" height="100" width="250" alt="" />
+                    </div>
+                    <div class="slide">
+                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/5.png" height="100" width="250" alt="" />
+                    </div>
+                    <div class="slide">
+                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/6.png" height="100" width="250" alt="" />
+                    </div>
+                    <div class="slide">
+                        <img src="IMAGES/pic.jpg" height="100" width="250" alt="" />
+                    </div>
+                    <div class="slide">
+                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/1.png" height="100" width="250" alt="" />
+                    </div>
+                    <div class="slide">
+                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/2.png" height="100" width="250" alt="" />
+                    </div>
+                    <div class="slide">
+                        <img src="IMAGES/pic.jpg" height="100" width="250" alt="" />
+                    </div>
+                    <div class="slide">
+                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/4.png" height="100" width="250" alt="" />
+                    </div>
+                    <div class="slide">
+                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/5.png" height="100" width="250" alt="" />
+                    </div>
+                    <div class="slide">
+                        <img src="IMAGES/pic.jpg" height="100" width="250" alt="" />
+                    </div>
+                    <div class="slide">
+                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/7.png" height="100" width="250" alt="" />
+                    </div>
+                </div>
+            </div>
             <div class="columns">
                 <div class="col_1">
 
                     <div class="col_1_form_group">
-                        <div class="welcome_message">
-                            <div class="slider">
-                                <div class="slide-track">
-                                    <div class="slide">
-                                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/1.png" height="100" width="250" alt="" />
-                                    </div>
-                                    <div class="slide">
-                                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/2.png" height="100" width="250" alt="" />
-                                    </div>
-                                    <div class="slide">
-                                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/3.png" height="100" width="250" alt="" />
-                                    </div>
-                                    <div class="slide">
-                                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/4.png" height="100" width="250" alt="" />
-                                    </div>
-                                    <div class="slide">
-                                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/5.png" height="100" width="250" alt="" />
-                                    </div>
-                                    <div class="slide">
-                                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/6.png" height="100" width="250" alt="" />
-                                    </div>
-                                    <div class="slide">
-                                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/7.png" height="100" width="250" alt="" />
-                                    </div>
-                                    <div class="slide">
-                                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/1.png" height="100" width="250" alt="" />
-                                    </div>
-                                    <div class="slide">
-                                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/2.png" height="100" width="250" alt="" />
-                                    </div>
-                                    <div class="slide">
-                                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/3.png" height="100" width="250" alt="" />
-                                    </div>
-                                    <div class="slide">
-                                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/4.png" height="100" width="250" alt="" />
-                                    </div>
-                                    <div class="slide">
-                                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/5.png" height="100" width="250" alt="" />
-                                    </div>
-                                    <div class="slide">
-                                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/6.png" height="100" width="250" alt="" />
-                                    </div>
-                                    <div class="slide">
-                                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/7.png" height="100" width="250" alt="" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+
+
                         <div class="form-group">
                             <label for="username">First Name</label>
-                            <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter Your First Name" value="<?php echo htmlspecialchars($fname) ?> "/>
+                            <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter Your First Name" value="<?php echo htmlspecialchars($fname) ?> " />
                         </div>
                         <div class="form-group">
                             <label for="sname">Last Name</label>
-                            <input type="text" class="form-control" name="sname" placeholder="Enter Last Name" value="<?php echo htmlspecialchars($sname) ?>"/>
+                            <input type="text" class="form-control" name="sname" placeholder="Enter Last Name" value="<?php echo htmlspecialchars($sname) ?>" />
                         </div>
                         <div class="form-group">
                             <label for="number">Mobile Number</label>
-                            <input type="tel" class="form-control" name="number" placeholder="Enter Your Mobile Number" value="<?php echo htmlspecialchars($number) ?>"/>
+                            <input type="tel" class="form-control" name="number" placeholder="Enter Your Mobile Number" value="<?php echo htmlspecialchars($number) ?>" />
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" name="email" placeholder="Enter Your Email" value="<?php echo htmlspecialchars($email) ?>"/>
+                            <input type="email" class="form-control" name="email" placeholder="Enter Your Email" value="<?php echo htmlspecialchars($email) ?>" />
                         </div>
-                        <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="text" class="form-control" name="username" placeholder="Create Username" value="<?php echo htmlspecialchars($username) ?>"/>
-                        </div>
+
                     </div>
                 </div>
                 <div class="col_2">
-                    <div class="img-group">
-                        <img src="IMAGES/user.png" alt="user.icon" />
-                    </div>
                     <div class="col_2_form_group">
                         <!-- <div class="radios">
                             <label>
@@ -259,7 +271,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="form-group">
                             <label for="selected_country">Select Country</label>
                             <select name="selected_country" class="form-control" id="country">
-                            <option value="0" label="Select a country ... " selected="selected" disabled hidden>Select a country ... </option>
+                                <option value="0" label="Select a country ... " selected="selected" disabled hidden>Select a country ... </option>
                                 <!-- AFRICA -->
                                 <option value="DZ" label="Algeria">Algeria</option>
                                 <option value="AO" label="Angola">Angola</option>
@@ -318,7 +330,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <option value="EH" label="Western Sahara">Western Sahara</option>
                                 <option value="ZM" label="Zambia">Zambia</option>
                                 <option value="ZW" label="Zimbabwe">Zimbabwe</option>
-                          
+
                                 <!-- AMERICA -->
                                 <option value="AI" label="Anguilla">Anguilla</option>
                                 <option value="AG" label="Antigua and Barbuda">Antigua and Barbuda</option>
@@ -373,7 +385,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <option value="US" label="United States">United States</option>
                                 <option value="UY" label="Uruguay">Uruguay</option>
                                 <option value="VE" label="Venezuela">Venezuela</option>
-                        
+
                                 <!-- ASIA -->
                                 <option value="AF" label="Afghanistan">Afghanistan</option>
                                 <option value="AM" label="Armenia">Armenia</option>
@@ -427,7 +439,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <option value="UZ" label="Uzbekistan">Uzbekistan</option>
                                 <option value="VN" label="Vietnam">Vietnam</option>
                                 <option value="YE" label="Yemen">Yemen</option>
-                               <!-- EUROPE-->
+                                <!-- EUROPE-->
                                 <option value="AL" label="Albania">Albania</option>
                                 <option value="AD" label="Andorra">Andorra</option>
                                 <option value="AT" label="Austria">Austria</option>
@@ -484,9 +496,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <option value="GB" label="United Kingdom">United Kingdom</option>
                                 <option value="VA" label="Vatican City">Vatican City</option>
                                 <option value="AX" label="Åland Islands">Åland Islands</option>
-                           
-                            
-                        </select>
+
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" name="username" placeholder="Create Username" value="<?php echo htmlspecialchars($username) ?>" />
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
@@ -494,7 +510,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password" value="<?php echo htmlspecialchars($confirm_password) ?>"/>
+                            <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password" value="<?php echo htmlspecialchars($confirm_password) ?>" />
                         </div>
                     </div>
                 </div>

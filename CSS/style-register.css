@@ -16,6 +16,7 @@ body {
   justify-content: center;
   overflow: auto;
   background-color: #663dff;
+  zoom: 0.90;
 }
 .container {
   margin-top: 10px;
@@ -42,16 +43,7 @@ body {
   padding: 10px;
   margin-bottom: 20px;
 }
-.success {
-  text-align: center;
-  transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  font-size: 20px;
-  background-color: #3cb371;
-  color: #fff;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 20px;
-}
+
 @media (min-width: 768px) {
   .columns {
   display: flex;
@@ -61,7 +53,13 @@ body {
 }
 .container .col_1 {
   width: 50%;
-  margin-right: 10px;
+  margin-right: 2px;
+ 
+}
+.container .col_2 {
+  width: 50%;
+  margin-left: 2px;
+ 
 }
 
 .container .col_1 .col_1_form_group .welcome_message i {
@@ -107,6 +105,7 @@ body {
 
   z-index: 2;
 }
+
 .slider::after {
   right: 0;
   top: 0;
@@ -124,52 +123,22 @@ body {
   height: 100px;
   width: 100%;
 }
+.slider .slide img {
+  height: 100%;
+  object-fit: cover;
+  margin: 0 auto;
+  display: block;
+}
 
 .container .col_1 .col_1_form_group {
-  height: 100%;
-  align-items: flex-end;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   flex-wrap: wrap;
 }
-.container .col_2 {
-  width: 50%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  position: relative;
-}
-.container .col_2 img {
-  width: 100%;
-  max-width: 80px;
-  max-height: 100px;
-}
-.radios input:checked{
-  transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-.radios {
-  display: flex;
-  padding-top: 15px;
-  padding-bottom: 15px;
-}
-.radios input {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background-color: rgba(0, 0, 0, 0.1);
-  transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-.container .col_2 .col_2_form_group {
-  width: 100%;
-  /* transform: translateY(83%); */
-  
-}
-.container .col_2 .col_2_form_group  select {
+
+
+.col_2_form_group  select {
   width: 100%;
   padding: 5px;
   height: 50px;
@@ -180,21 +149,19 @@ body {
   padding-right: 10px;
 }
 
-.container form .form-group {
-  width: 100%;
-}
+
 .container form .form-group input {
   width: 100%;
   padding: 5px;
   height: 50px;
-  border: 1px solid #ccc;
   border-radius: 5px;
+  border: 1px solid #ccc;
   background-color: #ffffff;
   padding-left: 10px;
   padding-right: 10px;
 }
 .container form .form-group input:focus {
-  border: 2px solid #66afe9;
+  border: 2px solid #0D6EFD;
   transform: scale(0.99);
   transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
@@ -221,7 +188,6 @@ body {
   white-space: nowrap;
   cursor: pointer;
   transition: all 0.3s;
-  margin: 20px 5px;
 }
 
 .login-button:active,

@@ -134,11 +134,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               <path d="M11 14.25C12.5188 14.25 13.75 13.0188 13.75 11.5C13.75 9.98122 12.5188 8.75 11 8.75C9.48122 8.75 8.25 9.98122 8.25 11.5C8.25 13.0188 9.48122 14.25 11 14.25Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>&nbsp;SETTING</li>
 
-          <li class="nav_item"><svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+         <a href="logout.php"> <li class="nav_item"><svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M8.8999 8.05999C9.2099 4.45999 11.0599 2.98999 15.1099 2.98999H15.2399C19.7099 2.98999 21.4999 4.77999 21.4999 9.24999V15.77C21.4999 20.24 19.7099 22.03 15.2399 22.03H15.1099C11.0899 22.03 9.2399 20.58 8.9099 17.04" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
               <path d="M15.0001 12.5H3.62012" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
               <path d="M5.85 9.14999L2.5 12.5L5.85 15.85" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>&nbsp;LOGOUT</li>
+            </svg>&nbsp;LOGOUT</li></a>
         </ul>
       </nav>
     </div>
@@ -158,9 +158,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         </div>
       </div>
-      <div class="bar-chart">
-        <canvas id="myChart" height="220px" width="660px"></canvas>
+      <div id="demo">
       </div>
+      <button onclick="getLocation()">Try It</button>
     </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.min.js"></script>
@@ -180,79 +180,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     });
   </script>
   <?php echo $user["fname"]; ?>
-  <script id="rendered-js">
-    const ctx = document.getElementById('myChart');
+ 
+  <script>
+var x = document.getElementById("demo");
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
 
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['<?php echo $user["fname"]; ?>', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Des'],
-        datasets: [{
-          label: 'Expense',
-          data: [11, 3, 94, 7, 4, 15, 7, 9, 15, 13, 7, 14],
-          borderWidth: 1,
-          borderRadius: 30,
-          barThickness: 12,
-          backgroundColor: [
-            'rgba(114, 92, 255, 1)'
-          ],
-
-          borderColor: [
-            'rgba(114, 92, 255, 1)'
-          ],
-
-          hoverBackgroundColor: [
-            'rgba(28, 30, 35, 1)'
-          ],
-
-          hoverBorderColor: [
-            'rgba(28, 30, 35, 1)'
-          ]
-        }]
-      },
-
-
-
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              // Include a dollar sign in the ticks
-              callback: function(value, index, ticks) {
-                return '$' + value + 'k';
-              },
-              stepSize: 5
-            }
-          },
-
-
-          x: {
-            grid: {
-              display: false
-            }
-          }
-        },
-
-
-
-        plugins: {
-          legend: {
-            display: false,
-            labels: {
-              font: {
-                size: 12,
-                family: "'Plus Jakarta Sans', sans-serif",
-                lineHeight: 18,
-                weight: 600
-              }
-            }
-          }
-        }
-      }
-    });
-  </script>
+function showPosition(position) {
+  x.innerHTML = "Latitude: " + position.coords.latitude +
+  "<br>Longitude: " + position.coords.longitude;
+}
+</script>
 
 </body>
 

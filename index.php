@@ -1,6 +1,5 @@
 <?php
 include('DB/conn.php');
-session_start();
 
 
 $email = $password = "";
@@ -64,7 +63,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             // Store data in session variables
                             $_SESSION["loggedIn"] = $loggedIn;
                             $_SESSION["email"] = $email;
-                            if($_POST["rememberMe"]) {
+                            if(isset($_POST["rememberMe"])) {
+                                setcookie('emailid', $_POST["email"],time()+50);
+                                setcookie('password', $_POST["password"],time()+50);
+                            }else {
                                 setcookie('emailid', $_POST["email"],time()+50);
                                 setcookie('password', $_POST["password"],time()+50);
                             }
@@ -81,12 +83,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         exit;
                                     }
                                 }
-                                mysqli_stmt_close($stmt);
                             }
 
 
                             // Redirect user to timeline page
-                            header("location: home.php");
+                            $loader =  "<svg class='pl' width='240' height='240' viewBox='0 0 240 240'>
+                            <circle class='pl__ring pl__ring--a' cx='120' cy='120' r='105' fill='none' stroke='#000' stroke-width='20' stroke-dasharray='0 660' stroke-dashoffset='-330' stroke-linecap='round'></circle>
+                            <circle class='pl__ring pl__ring--b' cx='120' cy='120' r='35' fill='none' stroke='#000' stroke-width='20' stroke-dasharray='0 220' stroke-dashoffset='-110' stroke-linecap='round'></circle>
+                            <circle class='pl__ring pl__ring--c' cx='85' cy='120' r='70' fill='none' stroke='#000' stroke-width='20' stroke-dasharray='0 440' stroke-linecap='round'></circle>
+                            <circle class='pl__ring pl__ring--d' cx='155' cy='120' r='70' fill='none' stroke='#000' stroke-width='20' stroke-dasharray='0 440' stroke-linecap='round'></circle>
+                            </svg>";
+                            header("refresh:5;url=home.php");
                         } else {
                             // Display an error message if password is not valid
                             $error = "The password you entered is not valid.";
@@ -113,6 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="CSS/font.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="CSS/style.css">
+    <link rel="stylesheet" href="/CSS/style-loader.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -120,7 +128,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-    <div id="bg-artwork"></div>
+    <div class="loader" <?php if (empty($loader)) echo "style='display:none;'" ?>>
+          <?php echo $loader ?> 
+        </div>
     <div class="wrapper">
         <div class="content">
             <div class="logo-area">
@@ -129,9 +139,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="error-text" <?php if (empty($error)) echo "style='display:none;'" ?>>
                 <span><?php echo $error ?></span>
             </div>
-            <div class="succes" <?php if (empty($success)) echo "style='display:none;'" ?>>
-                <span><?php echo $success ?></span>
-            </div>
+            
             <div class="input-field">
                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="form">
                     <div class="input">
